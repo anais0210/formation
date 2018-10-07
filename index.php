@@ -31,12 +31,12 @@ $matcher = new UrlMatcher($routes, $context);
 try
 {
 	$parameters = $matcher->match($pathInfo);
-
-//
-$pdo = new Connection();
-$repository = new StudentRepository($pdo);
-//
-
+	
+	//
+	$pdo = new Connection();
+	$repository = new StudentRepository($pdo);
+	//
+	
 	$controller = new $parameters['_controller']($repository);
 
 	call_user_func($controller);

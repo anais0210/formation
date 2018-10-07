@@ -23,28 +23,42 @@ class StudentRepository
 		);
 	}
 
-	public function update(string $id, string $fistname, string $lastname, \DateTime $birthdate)
+	public function update(string $id, string $firstname, string $lastname, \DateTime $birthdate)
 	{
-
+		$req = $this->connection->prepare('UPDATE student SET lastname=:lastname, firstname=:firstname, birthdate=:birthdate WHERE id=:id');
+		$req->execute(array(
+			'lastname' => $lastname,
+			'firstname' => $firstname,
+			'birthdate' => $birthdate->format('Y-m-d'),
+			'id' => $id)
+		);
 	}
 
-	public function delete($id)
+	public function delete(string $id)
 	{
-
+		$req = $this->connection->prepare('DELETE FROM student WHERE id=:id ');
+		$req->execute(array(
+			'id' => $id)
+		);
 	}
 
-	public function find($id)
+	public function find(string $id)
 	{
-
+		$req = $this->connection->prepare('SELECT FROM student WHERE id=:id');
+		$req->execute(array(
+			'id' => $id)
+		);
 	}
 	
-	public function findAll()
+	public function findAll(string $id, string $lastname, string $firstname, \DateTime $birthdate)
 	{
-		$request = $bdd->query('SELECT id, lastname, firstname, birthdate FROM student');
-		while ($student = $request->fetch(PDO::FETCH_ASSOC))
-		{
-		  echo $student['lastname'], $student['firstname'], $student['birthdate'];
-		}
+		$req = $this->connection->prepare('SELECT * FROM student');
+		$req->execute(array(
+			'lastname' => $lastname,
+			'firstname' => $firstname,
+			'birthdate' => $birthdate,
+			'id' => $id)
+		);
 	}
 
 }
