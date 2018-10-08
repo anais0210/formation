@@ -4,7 +4,6 @@ ini_set('display_errors', 1);
 
 require 'vendor/autoload.php';
 $routes = require 'config/route.php';
-/*require 'Connectbdd.php';*/
 
 use App\Model\Connection;
 use App\Repository\StudentRepository;
@@ -31,20 +30,22 @@ $matcher = new UrlMatcher($routes, $context);
 try
 {
 	$parameters = $matcher->match($pathInfo);
-	
+
 	//
 	$pdo = new Connection();
 	$repository = new StudentRepository($pdo);
 	//
 	
-	$controller = new $parameters['_controller']($repository);
+	$controller = new $parameters['_controller']($repository, $parameters);
 
 	call_user_func($controller);
 
 }
 catch (\Exception $e)
 {
-  echo 'Une exception a été lancée. Message d\'erreur :' . $e->getMessage();
+	http_response_code(500);
+	throw $e;
+	echo 'Une exception a été lancée. Message d\'erreur :' . $e->getMessage();
 }
 
 

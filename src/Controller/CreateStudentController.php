@@ -2,22 +2,20 @@
 
 namespace App\Controller;
 
-use App\Repository\StudentRepository;
+use App\Controller\BaseController;
 
-class CreateStudentController
+class CreateStudentController extends BaseController
 {
-	private $repository;
-
-	public function __construct(StudentRepository $repository)
-	{
-		$this->repository = $repository;
-	}
-
 	public function __invoke()
 	{
 		$json = file_get_contents('php://input');
 		$data = json_decode($json, true);
-		print_r($data);
+		
+		if (json_last_error() !== 0) {
+			echo 'Erreur dans ton JSON';
+			http_response_code(400);
+			return;
+		}
 
 		$birthdate = new \DateTime($data['birthdate']);
 

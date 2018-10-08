@@ -2,23 +2,14 @@
 
 namespace App\Controller;
 
-use App\Repository\StudentRepository;
+use App\Controller\BaseController;
 
-class GetStudentController
+class GetStudentController extends BaseController
 {
-	private $repository;
-
-	public function __construct(StudentRepository $repository)
-	{
-		$this->repository = $repository;
-	}
-
 	public function __invoke()
 	{
-		$json = file_get_contents('php://input');
-		$data = json_decode($json, true);
-		print_r($data);
-
-		$this->repository->find($data['id']);
+		$result = $this->repository->find($this->parameters['id']);
+		echo json_encode($result);
 	}
 }
+

@@ -44,21 +44,20 @@ class StudentRepository
 
 	public function find(string $id)
 	{
-		$req = $this->connection->prepare('SELECT FROM student WHERE id=:id');
+		$req = $this->connection->prepare('SELECT * FROM student WHERE id=:id');
 		$req->execute(array(
 			'id' => $id)
 		);
+		$result = $req->fetch(\PDO::FETCH_ASSOC);
+		return $result;
 	}
 	
-	public function findAll(string $id, string $lastname, string $firstname, \DateTime $birthdate)
+	public function findAll()
 	{
 		$req = $this->connection->prepare('SELECT * FROM student');
-		$req->execute(array(
-			'lastname' => $lastname,
-			'firstname' => $firstname,
-			'birthdate' => $birthdate,
-			'id' => $id)
-		);
+		$req->execute();
+		$result = $req->fetchAll(\PDO::FETCH_ASSOC);
+		return $result;
 	}
 
 }

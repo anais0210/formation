@@ -2,23 +2,12 @@
 
 namespace App\Controller;
 
-use App\Repository\StudentRepository;
+use App\Controller\BaseController;
 
-class DeleteStudentController
+class DeleteStudentController extends BaseController
 {
-	private $repository;
-
-	public function __construct(StudentRepository $repository)
-	{
-		$this->repository = $repository;
-	}
-
 	public function __invoke()
 	{
-		$json = file_get_contents('php://input');
-		$data = json_decode($json, true);
-		print_r($data);
-
-		$this->repository->delete($data['id']);
+		$this->repository->delete($this->parameters['id']);
 	}
 }
