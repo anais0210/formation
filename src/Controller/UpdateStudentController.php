@@ -17,8 +17,43 @@ class UpdateStudentController extends BaseController
 			return;
 		}
 
-		$birthdate = new \DateTime($data['birthdate']);
+		if (!array_key_exists('id', $data)) {
+		    echo "missing id";
+		    http_response_code(400);
+			return;
+		}
 
+		if (!array_key_exists('lastname', $data)) {
+		    echo "missing lastname";
+		    http_response_code(400);
+			return;
+		}
+
+		if (!array_key_exists('firstname', $data)) {
+		    echo "missing firstname";
+		    http_response_code(400);
+			return;
+		}
+
+		if (!array_key_exists('birthdate', $data)) {
+		    echo "missing birthdate";
+		    http_response_code(400);
+			return;
+		}
+
+		$birthdate = new \DateTime($data['birthdate']);
+		
+		$student = $this->repository->find($data['id']);
+		if ($student == null) {
+			return $this->redirectionErreur404();
+		}
+		
 		$this->repository->update($data['id'], $data['lastname'], $data['firstname'], $birthdate);
 	}
+
+	public function redirectionErreur404()
+	{
+	    header("HTTP/1.0 404 Not Found");
+	    http_response_code(404);
+	 }
 }

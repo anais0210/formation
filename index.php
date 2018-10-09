@@ -31,10 +31,8 @@ try
 {
 	$parameters = $matcher->match($pathInfo);
 
-	//
 	$pdo = new Connection();
 	$repository = new StudentRepository($pdo);
-	//
 	
 	$controller = new $parameters['_controller']($repository, $parameters);
 

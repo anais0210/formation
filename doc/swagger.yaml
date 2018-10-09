@@ -45,6 +45,8 @@ paths:
         schema:
           $ref: "#/definitions/StudentId"
       responses:
+        200: 
+          description: "ok"
         400:
           description: "Bad request"
         404:
@@ -56,6 +58,8 @@ paths:
       responses:
         200:
           description: "successful operation"
+        400: 
+          description: "Bad request"
           schema:
             type: "array"
             items:
@@ -87,6 +91,8 @@ paths:
       - "student"
       summary: "Deletes a student"
       responses:
+        200: 
+          description: "ok"
         400:
           description: "Bad request"
         404:
