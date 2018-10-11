@@ -82,8 +82,6 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/Student"
-        400:
-          description: "Bad request"
         404:
           description: "not found"
     delete:
@@ -94,9 +92,7 @@ paths:
         200: 
           description: "ok"
         400:
-          description: "Bad request"
-        404:
-          description: "not found"
+          description: "Bad Request"
  
 definitions:
   Student:
@@ -127,4 +123,3 @@ definitions:
         type: "string"
         example: "2015-04-01"
         format: "date"
-        

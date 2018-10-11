@@ -6,17 +6,20 @@ use Tests\Controller\ControllerTestCase;
 
 class ListStudentControllerTest extends ControllerTestCase
 {
-	public function testGetStudentSuccessFull()
+	public function testListStudentSuccessFull()
 	{
-		$response = $this->client->get('/student');
+		$response = $this->client->get('/student', ['exceptions' => FALSE]);
 
 		$this->assertEquals(200, $response->getStatusCode());
 	}
 
-	public function testGetStudentJsonIsInvalid()
+	public function testListStudentContentTypeJsonIsValid()
 	{
-		$response = $this->client->get('/student', ['exceptions' => FALSE, 'body' => '{ "lastname: "paul","firstname": "string", "birthdate": "2015-04-01"}']);
+		$response = $this->client->get('/student', ['exceptions' => FALSE]);
 		
-		$this->assertEquals(400, $response->getStatusCode());
+		$contentType = $response->getHeaderLine('Content-Type');
+
+		$this->assertEquals('application/json', $contentType);
+		$this->assertEquals(200, $response->getStatusCode());
 	}
 }
