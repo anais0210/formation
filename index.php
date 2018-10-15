@@ -2,8 +2,9 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-require 'vendor/autoload.php';
+require_once 'vendor/autoload.php';
 $routes = require 'config/route.php';
+$container = require 'container.php';
 
 use App\Model\Connection;
 use App\Repository\StudentRepository;
@@ -31,10 +32,10 @@ try
 {
 	$parameters = $matcher->match($pathInfo);
 
-	$pdo = new Connection();
-	$repository = new StudentRepository($pdo);
 	
-	$controller = new $parameters['_controller']($repository, $parameters);
+	$studentRepository = $containerBuilder->get('student_repository');
+		
+	$controller = new $parameters['_controller']($studentRepository, $parameters);
 
 	call_user_func($controller);
 

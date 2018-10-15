@@ -8,4 +8,3 @@ firstname VARCHAR(30) NOT NULL,
 birthDate DATE
 );
 
-
