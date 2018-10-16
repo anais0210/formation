@@ -57,7 +57,7 @@ class DatabaseTest
 
 		foreach ($students as $student) {
 			$request = $this->connection->prepare(
-				'INSERT INTO student(lastname, firstname, birthdate) VALUES(:lastname, :firstname, :birthdate)'
+				'INSERT INTO student(id, lastname, firstname, birthdate) VALUES(:id, :lastname, :firstname, :birthdate)'
 			);
 			$request->execute(array(
 				'id' => $student['id'],

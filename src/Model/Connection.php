@@ -6,6 +6,20 @@ class Connection
 {
 	private $connected = false;
 	private $pdo;
+	private $driver;
+	private $host;
+	private $dbname;
+	private $login;
+	private $password;
+
+	public function __construct( string $driver, string $host, String $dbname, string $login, string $password)
+	{
+		$this->driver = $driver;
+		$this->host = $host;
+		$this->dbname = $dbname;
+		$this->login = $login;
+		$this->password = $password;
+	}
 
 	public function connect()
 	{
@@ -14,7 +28,7 @@ class Connection
 		}
 
 		try {
-			$this->pdo = new \PDO('pgsql:host=formation.local;dbname=formation', 'postgres', 'postgres');
+			$this->pdo = new \PDO( $this->driver. ':host=' . $this->host.';dbname=' . $this->dbname, $this->login, $this->password);
 			$this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 
 			$this->connected = true;

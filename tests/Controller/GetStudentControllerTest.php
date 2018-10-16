@@ -26,7 +26,7 @@ class GetStudentControllerTest extends ControllerTestCase
 
 	public function testGetStudentIsNotFound()
 	{
-		$response = $this->client->get('/student/a4645b62-d088-11e8-a8d5-f2801f1b9fd1', ['exceptions' => FALSE]);
+		$response = $this->client->get('/student/25769c6c-d34d-4bfe-ba98-e0ee856f3e7a', ['exceptions' => FALSE]);
 		
 		$this->assertEquals(404, $response->getStatusCode());
 	}
