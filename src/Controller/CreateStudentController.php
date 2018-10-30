@@ -3,38 +3,46 @@
 namespace App\Controller;
 
 use App\Controller\BaseController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class CreateStudentController extends BaseController
 {
     public function __invoke()
     {
-        $json = file_get_contents('php://input');
-        var_dump($json);
-        $data = json_decode($json, true);
+        $response = new JsonResponse();
+        $errors = [];
+
+        $json = file_get_contents( 'php://input' );
+        $data = json_decode( $json, true );
 
         if (json_last_error() !== 0) {
-            echo 'Erreur dans ton JSON';
-            http_response_code(400);
-            return;
+            $response->setContent('Erreur dans ton JSON');
+            $response->setStatusCode(400);
+
+            return $response;
         }
 
-        if (!array_key_exists('lastname', $data)) {
-            echo "missing lastname";
-            http_response_code(400);
-            return;
+        if (!array_key_exists( 'lastname', $data )) {
+            $errors[] = 'missing lastname';
         }
-        if (!array_key_exists('firstname', $data)) {
-            echo "missing firstname";
-            http_response_code(400);
-            return;
+
+        if (!array_key_exists( 'firstname', $data )) {
+            $errors[] = 'missing firstname';
         }
-        if (!array_key_exists('birthdate', $data)) {
-            echo "missing birthdate";
-            http_response_code(400);
-            return;
+        if (!array_key_exists( 'birthdate', $data )) {
+            $errors[] = 'missing birthdate';
         }
-        $birthdate = new \DateTime($data['birthdate']);
-        $this->repository->create($data['lastname'], $data['firstname'], $birthdate);
-        http_response_code(201);
+
+        if (!empty($errors)) {
+            return new JsonResponse($errors, 400);
+        }
+
+        $birthdate = new \DateTime( $data['birthdate'] );
+        $this->repository->create( $data['lastname'], $data['firstname'], $birthdate );
+
+        $response->setStatusCode( 201 );
+
+        return $response;
     }
 }

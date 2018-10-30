@@ -2,8 +2,6 @@
 
 namespace Tests\Controller;
 
-use Tests\Controller\ControllerTestCase;
-
 class CreateStudentControllerTest extends ControllerTestCase
 {
 
@@ -13,24 +11,25 @@ class CreateStudentControllerTest extends ControllerTestCase
 		$firstname = 'Cambon';
 		$birthdate = '1887-12-12';
 
-		$response = $this->client->post('/student', [ 'json' => [ 'lastname' => $lastname, 'firstname' => $firstname, 'birthdate' => $birthdate] ]);
+		$response = $this->client->post('/student', [ 'exceptions' => FALSE, 'json' => [ 'lastname' => $lastname, 'firstname' => $firstname, 'birthdate' => $birthdate] ]);
 
 		$this->assertEquals(201, $response->getStatusCode());
 	}
  
  	public function testCreateStudentWhenJsonIsInvalid() 
-	{ 
-		$lastname = 'Anais';
-		$firstname = 'Cambon';
-		$birthdate = '1887-12-12';
+	{
+		$response = $this->client->post('/student', ['exceptions' => FALSE, 'body' => '{ "lastname: "paul","firstname": "string", "birthdate": "2015-04-01"}']);
 
-		
-		$response = $this->client->post('/student', ['body' => '{ "lastname: "paul","firstname": "string", "birthdate": "2015-04-01"}']);
-
-        echo $response->getBody()->getContents();
-
-		
-		
 		$this->assertEquals(400, $response->getStatusCode());
 	}
+
+	public function testCreateJsonIsValidAndLastNameIsMissing()
+    {
+        $firstname = 'Cambon';
+        $birthdate = '1887-12-12';
+        $response = $this->client->post('/student', ['exceptions' => FALSE, 'json' => [ 'firstname' => $firstname, 'birthdate' => $birthdate]]);
+
+
+        $this->assertEquals(400, $response->getStatusCode());
+    }
 }

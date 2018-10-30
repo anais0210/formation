@@ -36,6 +36,12 @@ class StudentRepository
 
 	public function delete(string $id)
 	{
+	    $user = $this->find($id);
+
+	    if (empty($user)) {
+	        throw new \Exception(sprintf('User with id "%s" not found.', $id));
+        }
+
 		$req = $this->connection->prepare('DELETE FROM student WHERE id=:id ');
 		$req->execute(array(
 			'id' => $id)

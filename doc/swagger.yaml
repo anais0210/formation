@@ -91,8 +91,8 @@ paths:
       responses:
         200: 
           description: "ok"
-        400:
-          description: "Bad Request"
+        404:
+          description: "Not found"
  
 definitions:
   Student:
