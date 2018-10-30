@@ -25,8 +25,10 @@ class CreateStudentControllerTest extends ControllerTestCase
 		$birthdate = '1887-12-12';
 
 		
-		$response = $this->client->post('/student', ['exceptions' => FALSE, 'body' => '{ "lastname: "paul","firstname": "string", "birthdate": "2015-04-01"}']);
-		
+		$response = $this->client->post('/student', ['body' => '{ "lastname: "paul","firstname": "string", "birthdate": "2015-04-01"}']);
+
+        echo $response->getBody()->getContents();
+
 		
 		
 		$this->assertEquals(400, $response->getStatusCode());

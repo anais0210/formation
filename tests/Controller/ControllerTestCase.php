@@ -18,7 +18,7 @@ class ControllerTestCase extends TestCase
         $databaseTest->insertData();
 
         $this->client = new Client([
-            'base_uri' => 'http://formation.local'
+            'base_uri' => 'http://nginx'
         ]);
     }
 }

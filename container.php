@@ -9,7 +9,7 @@ $containerBuilder = new ContainerBuilder();
 
 $containerBuilder->setParameter('driver', 'pgsql');
 $containerBuilder->setParameter('dbname', 'formation');
-$containerBuilder->setParameter('host', 'formation.local');
+$containerBuilder->setParameter('host', 'db');
 $containerBuilder->setParameter('login', 'postgres');
 $containerBuilder->setParameter('password', 'postgres');
 
