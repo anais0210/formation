@@ -15,4 +15,3 @@ class BaseController
 		$this->repository = $repository;
 		$this->parameters = $parameters;
 	}
-}

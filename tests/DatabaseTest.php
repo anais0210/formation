@@ -14,6 +14,7 @@ class DatabaseTest
 	{
 		$this->connection = $connection->connect();
 	}
+
 	public function deleteDatabase()
 	{
 		$request = $this->connection->prepare("DELETE FROM student");
